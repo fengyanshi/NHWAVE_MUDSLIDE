@@ -34,8 +34,8 @@
 #--------------------------------------------------------------------------
 #  Libraries           
 #--------------------------------------------------------------------------
-         LIBS  = -L/Users/fengyanshi/Public/hypre-2.8.0b/src/hypre/lib -lHYPRE
-         INCS  = -I/Users/fengyanshi/Public/hypre-2.8.0b/src/hypre/include
+          LIBS  = -L/Users/fengyanshi15/Public/hypre-2.11.1/src/hypre/lib -lHYPRE
+          INCS  = -I/Users/fengyanshi15/Public/hypre-2.11.1/src/hypre/include
 #--------------------------------------------------------------------------
 #  Preprocessing and Compilation Directives
 #--------------------------------------------------------------------------
@@ -49,7 +49,7 @@
 #  NHWAVE Source Code.
 #--------------------------------------------------------------------------
 
-MODS  = mod_global.F	mod_util.F 
+MODS  = mod_global.F	mod_util.F slide.F 
 
 MAIN  = nhwave.F 
 
