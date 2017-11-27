@@ -111,7 +111,7 @@
                                               DelxEta,DelyEta,DelxD,DelyD,Uin_X0,Vin_X0,Win_X0,Uin_Xn,Vin_Xn, &
                                               Win_Xn,Bc_Prs,Sponge
 
-!/*DJN 	
+!DJN	
      real(SP), dimension(:,:), allocatable :: SldM0, SldN0, SldZ0, SldDZ0
      real(SP), dimension(:,:), allocatable :: SldM1, SldN1, SldZ1, SldDZ1
      real(SP), dimension(:,:), allocatable :: SldMs, SldNs, SldZs, SldDZs
@@ -125,7 +125,7 @@
      real(SP) :: SLIDE_DIFF 
 
      real(SP) :: SLIDE_RKC1, SLIDE_RKC2, SLIDE_RKDT    
-!DJN*/
+!DJN
 
      real(SP), dimension(:,:,:), allocatable :: U,V,W,Omega,P,DU,DV,DW,DU0,DV0,DW0, &
                                                 UxL,UxR,VxL,VxR,WxL,WxR,DUxL,DUxR,DVxL,DVxR,DWxL, &
