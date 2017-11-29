@@ -4895,12 +4895,12 @@ print*,'out of read_bathymetry OK'
 ! fyshi add tmp4preview
      ALLOCATE(tmp4preview2D(Mloc,Nloc))
 
-!/*DJN add the viscous landslide
+!DJN add the viscous landslide
      ALLOCATE(SldM0(Mloc,Nloc), SldN0(Mloc,Nloc), SldZ0(Mloc,Nloc), SldDZ0(Mloc,Nloc), &
               SldM1(Mloc,Nloc), SldN1(Mloc,Nloc), SldZ1(Mloc,Nloc), SldDZ1(Mloc,Nloc), & 
               SldMs(Mloc,Nloc), SldNs(Mloc,Nloc), SldZs(Mloc,Nloc), SldDZs(Mloc,Nloc), & 
               SldWZ(Mloc,Nloc), SldUs(Mloc,Nloc), SldVs(Mloc,Nloc))
-!DJN*/
+!DJN
 
      ALLOCATE(EleMax(Mloc,Nloc),EleMin(Mloc,Nloc))
 
