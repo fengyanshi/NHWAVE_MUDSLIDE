@@ -25,20 +25,44 @@
      ! read parameter input
      call read_input
 
+# if defined (DEBUG)
+print*,'read input OK'
+# endif
+
      ! work index
      call index
  
+# if defined (DEBUG)
+print*,'index OK'
+# endif
+
      ! allocate variables
      call allocate_variables
+
+# if defined (DEBUG)
+print*,'allocate variables OK'
+# endif
 
      ! generate grids
      call generate_grid
 
+# if defined (DEBUG)
+print*,'generate grid OK'
+# endif
+
      ! read bathymetry
      call read_bathymetry
 
+# if defined (DEBUG)
+print*,'read bathymetry OK'
+# endif
+
      ! initialize model run
      call initial
+
+# if defined (DEBUG)
+print*,'initial OK'
+# endif
 
      ! time integration
      do while (TIME<TOTAL_TIME.and.RUN_STEP<SIM_STEPS)
@@ -46,19 +70,39 @@
        ! time step     
        call estimate_dt
 
+# if defined (DEBUG)
+print*,'estimate dt OK'
+# endif
+
 # if defined (LANDSLIDE)
        ! run landslide-generated tsunami
        call update_bathymetry
 # endif
 
+# if defined (DEBUG)
+print*,'update bathymetry OK'
+# endif
+
        ! update boundary conditions       
        call update_wave_bc
+
+# if defined (DEBUG)
+print*,'update wave bc OK'
+# endif
 
        ! update mask
        call update_mask
 
+# if defined (DEBUG)
+print*,'update mask OK'
+# endif
+
        ! update vars
        call update_vars
+
+# if defined (DEBUG)
+print*,'update_vars OK'
+# endif
 
        ! SSP Runge-Kutta time stepping
        do Istage = 1,It_Order
@@ -66,17 +110,37 @@
          ! well-balanced source terms
          call source_terms
 
+# if defined (DEBUG)
+print*,'source_terms OK'
+# endif
+
          ! fluxes at cell faces
          call fluxes
+
+# if defined (DEBUG)
+print*,'fluxes OK'
+# endif
 
          ! update all variables
          call eval_duvw(Istage)
 
+# if defined (DEBUG)
+print*,'eval_duvw OK'
+# endif
+
          ! sponge layer
          call sponge_damping
 
+# if defined (DEBUG)
+print*,'sponge_damping OK'
+# endif
+
          ! turbulence model
          if(VISCOUS_FLOW) call eval_turb(Istage)
+
+# if defined (DEBUG)
+print*,'eval_turb OK'
+# endif
 
 # if defined (BUBBLE)
          if(TIME>=TIM_B) then
