@@ -4380,6 +4380,10 @@ print*,'read slide OK'
      enddo
      enddo
 
+# if defined (DEBUG)
+print*,'SldZ OK'
+# endif
+
      SldN0=Zero
      SldNs=Zero
      SldN1=Zero
@@ -4393,6 +4397,10 @@ print*,'read slide OK'
        Hc(i,j) = Hc(i,j)-SldDZ0(i,j) 
      enddo
      enddo
+
+# if defined (DEBUG)
+print*,'interpolate into center OK'
+# endif
 
      ! collect data into ghost cells
      call phi_2D_coll(Hc)
