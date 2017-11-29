@@ -4303,12 +4303,20 @@ subroutine update_bathymetry
        write(*,*) 'DEPTH_TYPE has to be cell_center'
      endif
   
+# if defined (DEBUG)
+print*,'cell_grid OK'
+# endif
+
      ! read bathymetry at cell center
 
      open(5,file=TRIM(Depth_File),status='old')
      do j = 1,Nglob
        read(5,*) (HCG(i,j),i=1,Mglob)
      enddo
+
+# if defined (DEBUG)
+print*,'open read bathymetry file OK'
+# endif
 
 # if defined (PARALLEL)
      do j = Jbeg,Jend
@@ -4328,14 +4336,26 @@ subroutine update_bathymetry
      enddo
 # endif
 
+# if defined (DEBUG)
+print*,'assign HCG to Hc OK'
+# endif
+
      call phi_2D_coll(Hc)
      DepC0 = Hc   ! save base bathymetry for field case
+
+# if defined (DEBUG)
+print*,'DepC0 OK'
+# endif
 
      open(5001,file=TRIM(Slide_File),status='old')
      do j = 1,Nglob
        read(5001,*) (SldDZtmp(i,j),i=1,Mglob)
      enddo
      close(5001)
+
+# if defined (DEBUG)
+print*,'read slide OK'
+# endif
 
      do i = Ibeg,Iend
      do j = Jbeg,Jend
@@ -4384,6 +4404,10 @@ subroutine update_bathymetry
      call phi_2D_coll(SldZ1)  
 
 
+# if defined (DEBUG)
+print*,'fill ghost cells OK'
+# endif
+
      ! find pernament dry cells
      Mask_Struct = 1
      do j = Jbeg,Jend
@@ -4421,6 +4445,10 @@ subroutine update_bathymetry
        DelyH(i,j) = (Hfy(i,j+1)-Hfy(i,j))/dy
      enddo
      enddo
+
+# if defined (DEBUG)
+print*,'out of read_bathymetry OK'
+# endif
 
      end subroutine read_bathymetry
 
