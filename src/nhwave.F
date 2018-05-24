@@ -2610,8 +2610,16 @@ print*,'eval_turb OK'
      endif
 
      if(OUT_SLD) then		                   !DJN
+
        file=TRIM(FDIR)//'slide_'//TRIM(FILE_NAME)  !DJN
        call putfile2D(file,SldDZ1)		   !DJN
+
+       file=TRIM(FDIR)//'slideU_'//TRIM(FILE_NAME)  !fyshi
+       call putfile2D(file,SldUs)
+
+       file=TRIM(FDIR)//'slideV_'//TRIM(FILE_NAME)  !fyshi
+       call putfile2D(file,SldVs)
+
      endif		                           !DJN
 
      if(OUT_U) then
