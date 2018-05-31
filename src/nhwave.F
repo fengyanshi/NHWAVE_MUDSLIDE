@@ -869,7 +869,7 @@ print*,'eval_turb OK'
 
      !FS by DJN June 26, 2013
      REAL(SP) :: Fr,Utotal,Utheta
-     REAL(SP) :: FroudeCap=0.5
+!     REAL(SP) :: FroudeCap=0.5
 
      allocate(R1(Mloc,Nloc))
      allocate(R2(Mloc,Nloc,Kloc))
@@ -5254,6 +5254,15 @@ print*,'out of read_bathymetry OK'
      WRITE(3,'(A6,I2)')'Ibot= ',Ibot
      WRITE(3,'(A5,F8.5)')'Cd0= ',Cd0
      WRITE(3,'(A5,F8.5)')'Zob= ',Zob
+# endif
+
+     ! froudecap
+     CALL GET_Float_VAL(FroudeCap,FILE_NAME,'FroudeCap',line)
+
+# if defined (PARALLEL)
+     if(myid.eq.0) WRITE(3,'(A12,F8.5)')'FroudeCap= ',FroudeCap
+# else
+     WRITE(3,'(A12,F8.5)')'FroudeCap= ',FroudeCap
 # endif
 
      ! numerical scheme

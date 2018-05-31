@@ -123,6 +123,7 @@
      real(SP) :: SLIDE_ROUGHNESS
      real(SP) :: SLIDE_MINTHICK 
      real(SP) :: SLIDE_DIFF 
+     real(SP) :: FroudeCap
 
      real(SP) :: SLIDE_RKC1, SLIDE_RKC2, SLIDE_RKDT    
 !DJN
