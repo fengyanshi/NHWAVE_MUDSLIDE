@@ -163,8 +163,8 @@ print*,'eval_turb OK'
         IF(Eta(I,J).LT.EleMin(I,J)) EleMin(I,J)=Eta(I,J)
         IF(Froude(I,J).GT.FrMax(I,J)) THEN
            FrMax(I,J)=Froude(I,J)
-           DepFrMax(I,J) = Hc(I,J)
-        ENIF
+           DepMaxFr(I,J) = Hc(I,J)
+        ENDIF
       ENDIF
       ENDDO
       ENDDO
