@@ -160,6 +160,6 @@
 ! add base bathymetry for landslide fyshi
      real(SP), dimension(:,:), allocatable :: Dep0,DepC0    
 
-     REAL(SP),DIMENSION(:,:),ALLOCATABLE :: EleMax,EleMin 
+     REAL(SP),DIMENSION(:,:),ALLOCATABLE :: EleMax,EleMin,FrMax,DepMaxFr,Froude
 
      End Module GLOBAL

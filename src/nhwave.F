@@ -158,10 +158,14 @@ print*,'eval_turb OK'
 ! find max and min elevation
       DO J=1,Nloc
       DO I=1,Mloc
-        IF(MASK(I,J).GT.0)THEN
+      IF(MASK(I,J).GT.0)THEN
         IF(Eta(I,J).GT.EleMax(I,J)) EleMax(I,J)=Eta(I,J)
         IF(Eta(I,J).LT.EleMin(I,J)) EleMin(I,J)=Eta(I,J)
-        ENDIF
+        IF(Froude(I,J).GT.FrMax(I,J)) THEN
+           FrMax(I,J)=Froude(I,J)
+           DepFrMax(I,J) = Hc(I,J)
+        ENIF
+      ENDIF
       ENDDO
       ENDDO
 
@@ -997,6 +1001,7 @@ print*,'eval_turb OK'
      do j = Jbeg,Jend
      do i = Ibeg,Iend
         Fr=SQRT(GRAV*MAX(D(I,J),MinDep))*MAX(D(I,J),MinDep)
+        Froude(I,J) = Fr
       IF(MASK(I,J)>ZERO)THEN
        do k = Kbeg,Kend
          Utotal=SQRT(DU(I,J,K)*DU(I,J,K)+DV(I,J,K)*DV(I,J,K) &
@@ -2606,6 +2611,12 @@ print*,'eval_turb OK'
 
        file=TRIM(FDIR)//'hmin_'//TRIM(FILE_NAME)
        call putfile2D(file,EleMin)
+
+       file=TRIM(FDIR)//'FrMax_'//TRIM(FILE_NAME)
+       call putfile2D(file,FrMax)
+
+       file=TRIM(FDIR)//'Depfm_'//TRIM(FILE_NAME)
+       call putfile2D(file,DepMaxFr)
 
      endif
 
@@ -4683,6 +4694,8 @@ print*,'out of read_bathymetry OK'
 
      EleMax = Zero
      EleMin = Large
+     FrMax = ZERO
+     DepMaxFr = ZERO
 
 # if defined (BUBBLE)
      Nbg = Zero
@@ -4910,7 +4923,8 @@ print*,'out of read_bathymetry OK'
               SldWZ(Mloc,Nloc), SldUs(Mloc,Nloc), SldVs(Mloc,Nloc))
 !DJN
 
-     ALLOCATE(EleMax(Mloc,Nloc),EleMin(Mloc,Nloc))
+     ALLOCATE(EleMax(Mloc,Nloc),EleMin(Mloc,Nloc),FrMax(Mloc,Nloc),DepMaxFr(Mloc,Nloc), &
+              Froude(Mloc,Nloc))
 
      ! three-dimensional vars
 
