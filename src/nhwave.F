@@ -161,10 +161,12 @@ print*,'eval_turb OK'
       IF(MASK(I,J).GT.0)THEN
         IF(Eta(I,J).GT.EleMax(I,J)) EleMax(I,J)=Eta(I,J)
         IF(Eta(I,J).LT.EleMin(I,J)) EleMin(I,J)=Eta(I,J)
-        IF(Froude(I,J).GT.FrMax(I,J)) THEN
-           FrMax(I,J)=Froude(I,J)
+       DO K=1,Kloc
+        IF(Froude(I,J,K).GT.FrMax(I,J,K)) THEN
+           FrMax(I,J,K)=Froude(I,J,K)
            DepMaxFr(I,J) = Hc(I,J)
         ENDIF
+       ENDDO
       ENDIF
       ENDDO
       ENDDO
@@ -1001,11 +1003,12 @@ print*,'eval_turb OK'
      do j = Jbeg,Jend
      do i = Ibeg,Iend
         Fr=SQRT(GRAV*MAX(D(I,J),MinDep))*MAX(D(I,J),MinDep)
-        Froude(I,J) = Fr
+        
       IF(MASK(I,J)>ZERO)THEN
        do k = Kbeg,Kend
          Utotal=SQRT(DU(I,J,K)*DU(I,J,K)+DV(I,J,K)*DV(I,J,K) &
           +DW(I,J,K)*DW(I,J,K))
+         Froude(I,J,K) = Utotal/Fr
          IF(Utotal/Fr.gt.FroudeCap)THEN
           Utheta=ATAN2(DV(I,J,K),DU(I,J,K))
           DU(I,J,K)=FroudeCap*Fr*COS(Utheta)
@@ -2613,7 +2616,7 @@ print*,'eval_turb OK'
        call putfile2D(file,EleMin)
 
        file=TRIM(FDIR)//'FrMax_'//TRIM(FILE_NAME)
-       call putfile2D(file,FrMax)
+       call putfile3D(file,FrMax)
 
        file=TRIM(FDIR)//'Depfm_'//TRIM(FILE_NAME)
        call putfile2D(file,DepMaxFr)
@@ -4923,8 +4926,8 @@ print*,'out of read_bathymetry OK'
               SldWZ(Mloc,Nloc), SldUs(Mloc,Nloc), SldVs(Mloc,Nloc))
 !DJN
 
-     ALLOCATE(EleMax(Mloc,Nloc),EleMin(Mloc,Nloc),FrMax(Mloc,Nloc),DepMaxFr(Mloc,Nloc), &
-              Froude(Mloc,Nloc))
+     ALLOCATE(EleMax(Mloc,Nloc),EleMin(Mloc,Nloc),FrMax(Mloc,Nloc,Kloc),DepMaxFr(Mloc,Nloc), &
+              Froude(Mloc,Nloc,Kloc))
 
      ! three-dimensional vars
 
