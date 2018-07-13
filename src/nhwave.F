@@ -10,7 +10,7 @@
 !-------------------------------------------------------
      use global
      implicit none
-     integer :: Istage,I,J
+     integer :: Istage,I,J,K
      real(SP) :: tbegin,tend
 
 # if defined (PARALLEL)
