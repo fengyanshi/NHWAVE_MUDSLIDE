@@ -164,6 +164,10 @@ print*,'eval_turb OK'
        DO K=1,Kloc
         IF(Froude(I,J,K).GT.FrMax(I,J,K)) THEN
            FrMax(I,J,K)=Froude(I,J,K)
+        ENDIF
+        IF(Froude_total(I,J,K).GT.FrMax_total(I,J,K)) THEN
+           FrMax_total(I,J,K)=Froude_total(I,J,K)
+           TimeMaxFr(I,J) = Time
            DepMaxFr(I,J) = Hc(I,J)
         ENDIF
        ENDDO
@@ -874,7 +878,7 @@ print*,'eval_turb OK'
      integer :: i,j,k,n,Ista
 
      !FS by DJN June 26, 2013
-     REAL(SP) :: Fr,Utotal,Utheta
+     REAL(SP) :: Fr,Utotal,Utheta,U_water_slide
 !     REAL(SP) :: FroudeCap=0.5
 
      allocate(R1(Mloc,Nloc))
@@ -1008,7 +1012,11 @@ print*,'eval_turb OK'
        do k = Kbeg,Kend
          Utotal=SQRT(DU(I,J,K)*DU(I,J,K)+DV(I,J,K)*DV(I,J,K) &
           +DW(I,J,K)*DW(I,J,K))
+         U_water_slide= SQRT((DU(I,J,K)-SldUs(I,J))*(DU(I,J,K)-SldUs(I,J)) &
+                           +(DV(I,J,K)-SldVs(I,J))*(DV(I,J,K)-SldVs(I,J)) &
+                            )
          Froude(I,J,K) = Utotal/Fr
+         Froude_total(I,J,K) = U_water_slide/Fr
          IF(Utotal/Fr.gt.FroudeCap)THEN
           Utheta=ATAN2(DV(I,J,K),DU(I,J,K))
           DU(I,J,K)=FroudeCap*Fr*COS(Utheta)
@@ -2618,8 +2626,14 @@ print*,'eval_turb OK'
        file=TRIM(FDIR)//'FrMax_'//TRIM(FILE_NAME)
        call putfile3D(file,FrMax)
 
+       file=TRIM(FDIR)//'FrMaxT_'//TRIM(FILE_NAME)
+       call putfile3D(file,FrMax_total)
+
        file=TRIM(FDIR)//'Depfm_'//TRIM(FILE_NAME)
        call putfile2D(file,DepMaxFr)
+
+       file=TRIM(FDIR)//'Timefm_'//TRIM(FILE_NAME)
+       call putfile2D(file,TimeMaxFr)
 
      endif
 
@@ -4698,6 +4712,8 @@ print*,'out of read_bathymetry OK'
      EleMax = Zero
      EleMin = Large
      FrMax = ZERO
+     FrMax_total = ZERO
+     TimeMaxFr = ZERO
      DepMaxFr = ZERO
 
 # if defined (BUBBLE)
@@ -4927,7 +4943,8 @@ print*,'out of read_bathymetry OK'
 !DJN
 
      ALLOCATE(EleMax(Mloc,Nloc),EleMin(Mloc,Nloc),FrMax(Mloc,Nloc,Kloc),DepMaxFr(Mloc,Nloc), &
-              Froude(Mloc,Nloc,Kloc))
+              Froude(Mloc,Nloc,Kloc),FrMax_total(Mloc,Nloc,Kloc),TimeMaxFr(Mloc,Nloc), &
+              Froude_total(Mloc,Nloc,Kloc))
 
      ! three-dimensional vars
 
