@@ -62,7 +62,7 @@ NON_HYDRO = T
 
 ! --------------------COURANT_NUMBER---------------------------------
 CFL = 0.5
-
+FroudeCap = 1.0
 ! --------------------VISCOSITY------------------------------
 VISCOUS_FLOW = F
 IVTURB = 10
